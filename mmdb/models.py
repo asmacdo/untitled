@@ -65,6 +65,12 @@ class SoundFormat(models.Model):
 
 
 class Track(models.Model):
+    # One additional thought is that a track doesn't have to map to a work, it could map to a recording or
+    # performance. This is problematic though because it might be remastered, a different length, etc. I am not sure
+    # at what point to consider it a different recording. I also think it would be really hard to get accurate
+    # information. So as it is, the same recording on two different albums would only be  related as much as two
+    # different recordings by the same artists. I don't like that, but I have to draw the line somewhere.
+
     # TODO How long can filenames be?
     # TODO, actually, revisit all charfield lengths...
     filename = models.CharField(max_length=300)
