@@ -15,14 +15,21 @@ class Person(models.Model):
 class Work(models.Model):
     work_name = models.CharField('Work Name', max_length=100)
     work_type = models.CharField('Work Type', max_length=100)
-    work_parent = models.ForeignKey('self', null=True)
+    work_parent = models.ForeignKey('self', blank=True, null=True)
 
     def __str__(self):
         return self.work_name
 
 
+class RelationshipType(models.Model):
+    rel_name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.rel_name
+
+
 class Relationship(models.Model):
-    rel_name = models.CharField('Relationship', max_length=100)
+    rel_type = models.ForeignKey(RelationshipType, default=None)
     person = models.ForeignKey(Person)
     work = models.ForeignKey(Work)
 

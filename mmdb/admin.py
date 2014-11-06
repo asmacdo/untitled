@@ -1,5 +1,5 @@
 from django.contrib import admin
-from mmdb.models import Person, Work, Relationship
+from mmdb.models import Person, Work, Relationship, RelationshipType
 
 
 class PersonAdmin(admin.ModelAdmin):
@@ -9,15 +9,23 @@ class PersonAdmin(admin.ModelAdmin):
     ]
 
 
+class RelationshipTypeAdmin(admin.ModelAdmin):
+    model = RelationshipType
+    fieldsets = [
+        (None, {'fields': ['rel_name']})
+    ]
+
+
 class RelationshipInline(admin.TabularInline):
     model = Relationship
     extra = 3
 
 
 class WorkAdmin(admin.ModelAdmin):
-    fields = ['work_name', 'work_type', 'work_parent']
+    list_display = ['work_type', 'work_name', 'work_parent']
     inlines = [RelationshipInline]
 
 
 admin.site.register(Person, PersonAdmin)
+admin.site.register(RelationshipType, RelationshipTypeAdmin)
 admin.site.register(Work, WorkAdmin)
