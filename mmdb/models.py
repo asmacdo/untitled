@@ -50,7 +50,10 @@ class WorkCollection(models.Model):
     parent = models.ForeignKey('self', null=True, blank=True)
 
     def __str__(self):
-        return "{name}({year})".format(name=self.name, year=self.publish_date.year)
+        return "{name}({year})".format(
+            name=self.name,
+            year=self.publish_date.year
+        )
 
     def __short_str(self):
         return self.name
@@ -65,11 +68,14 @@ class SoundFormat(models.Model):
 
 
 class Track(models.Model):
-    # One additional thought is that a track doesn't have to map to a work, it could map to a recording or
-    # performance. This is problematic though because it might be remastered, a different length, etc. I am not sure
-    # at what point to consider it a different recording. I also think it would be really hard to get accurate
-    # information. So as it is, the same recording on two different albums would only be  related as much as two
-    # different recordings by the same artists. I don't like that, but I have to draw the line somewhere.
+    # One additional thought is that a track doesn't have to map to a work,
+    # it could map to a recording or performance. This is problematic though
+    # because it might be remastered, a different length, etc. I am not sure
+    # at what point to consider it a different recording. I also think it
+    # would be really hard to get accurate information. So as it is, the same
+    #  recording on two different albums would only be  related as much as
+    # two different recordings by the same artists. I don't like that,
+    # but I have to draw the line somewhere.
 
     # TODO How long can filenames be?
     # TODO, actually, revisit all charfield lengths...
@@ -127,4 +133,7 @@ class Relationship(models.Model):
     def __str__(self):
         people = self.person or self.people_group or self.publisher
         entity = self.work or self.work_collection or self.track
-        return "{people} -> {entity}".format(people=people.__short_str(), entity=entity.__short_str())
+        return "{people} -> {entity}".format(
+            people=people.__short_str(),
+            entity=entity.__short_str()
+        )
