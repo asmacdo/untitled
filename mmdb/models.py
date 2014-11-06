@@ -30,17 +30,6 @@ class PeopleGroup(models.Model):
         return self.name
 
 
-class Publisher(models.Model):
-    #Substitute for label
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-    
-    def __short_str(self):
-        return self.name
-
-
 class WorkCollection(models.Model):
     # Substitute for Album
     publish_date = models.DateField()
@@ -120,7 +109,6 @@ class Relationship(models.Model):
     # TODO one and only one of this group
     person = models.ForeignKey(Person)
     people_group = models.ForeignKey(PeopleGroup)
-    publisher = models.ForeignKey(Publisher)
 
     # TODO one and only one of this group
     work = models.ForeignKey(Work, null=True, blank=True)
@@ -131,7 +119,7 @@ class Relationship(models.Model):
     outside_relationship_id = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        people = self.person or self.people_group or self.publisher
+        people = self.person or self.people_group
         entity = self.work or self.work_collection or self.track
         return "{people} -> {entity}".format(
             people=people.__short_str(),
